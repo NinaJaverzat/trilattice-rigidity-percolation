@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
 
     double pmin = pc-.03;
     double pmax = pc;              // Range of filling fractions
-    int p_steps = 1; 								// Number of points in the phase diagram
+    int p_steps = 30; 								// Number of points in the phase diagram
 
 
 // RELEVANT VARIABLES
@@ -130,6 +130,10 @@ int main(int argc, char* argv[]) {
         std::cout<<"The largest rigid cluster has size "<<scalars.RCSmax<<"\n";
         save_config(&network, &RBlabels, &scalars, "./cfgs/", p);
       }
+      fprintf(myROPfile, "%f %Lf %Lf\n", p,  ROP.y[k]/scalars.T, ROP.y2[k]/scalars.T);
+      fprintf(myCHIfile, "%f %Lf %Lf\n", p,  (CHI.y[k])/scalars.T, (CHI.y2[k])/scalars.T);
+      fflush(myROPfile);
+      fflush(myCHIfile);
       
     }
 
