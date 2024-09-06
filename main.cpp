@@ -68,9 +68,9 @@ int main(int argc, char* argv[]) {
     //double p = 0.66;//atoi(argv[2]);						// Set filling fraction
     //int MM = round(p*(scalars.M));						// Number of bonds to be placed
 
-    double pmin = pc-.03;
-    double pmax = pc;              // Range of filling fractions
-    int p_steps = 30; 								// Number of points in the phase diagram
+    double pmin = pc-.05;
+    double pmax = pc+.05;              // Range of filling fractions
+    int p_steps = 10; 								// Number of points in the phase diagram
 
 
 // RELEVANT VARIABLES
@@ -80,7 +80,6 @@ int main(int argc, char* argv[]) {
     std::vector<std::vector<int>> network(scalars.N);                      		// Triangular lattice, filled as bonds get activated
     std::vector<std::vector<int>> pebble_graph(scalars.N);                      // Pebble network: pebble_graph[i] = j <=> A directed bond i->j exists
 
-    std::vector<std::vector<int>> RBlabels(scalars.N), RNlabels(scalars.N);
 
     std::unordered_map<int, int> RCS, RCS_dist;                                     	// Rigid clusters size; Rigid clusters size distribution
 
@@ -113,22 +112,23 @@ int main(int argc, char* argv[]) {
 ////////////////////////////////////////////////////////////////////////////////
 
     clock_t tStart = clock();
-    cout << "L = "<<scalars.L<<" N = "<<scalars.N<<" Seed =  "<<scalars.seed<<"\n";
-    cout << "////////////////////////////////\n\n";
+    std::cout << "L = "<<scalars.L<<" N = "<<scalars.N<<" Seed =  "<<scalars.seed<<"\n";
+    std::cout << "////////////////////////////////\n\n";
 
     for(int k=0; k<p_steps; ++k)
     {
       double p = pmin + (pmax-pmin)*(double)k/p_steps;
-      std::cout << "p = "<< p<<",\t";
+      std::cout << "\np = "<< p<<",\t";
       int MM = round(p*(scalars.M));
-      cout << MM << " bonds out of " << scalars.M << " will be placed\n\n";
+      std::cout << MM << " bonds out of " << scalars.M << " will be placed\n\n";
 
       for(int i=1; i<=scalars.T; ++i)
       {
-        RP_init(&RNlabels, &RBlabels, &RCS, &RCS_dist, &bonds, &network, &np, &pebble_graph, &scalars, &ROP, &CHI, p_steps);
-        RP_single_trial(MM, &RNlabels, &RBlabels, &RCS, &RCS_dist, &bonds, &network, &np, &pebble_graph, &scalars, &ROP, &CHI, k);
+        init( &RCS, &RCS_dist, &bonds, &network, &np, &pebble_graph, &scalars, &ROP, &CHI, p_steps);
+        single_trial(MM, &RCS, &RCS_dist, &bonds, &network, &np, &pebble_graph, &scalars, &ROP, &CHI, k, true);
         std::cout<<"The largest rigid cluster has size "<<scalars.RCSmax<<"\n";
-        save_config(&network, &RBlabels, &scalars, "./cfgs/", p);
+        save_network (&network, &scalars, k);
+        
       }
       fprintf(myROPfile, "%f %Lf %Lf\n", p,  ROP.y[k]/scalars.T, ROP.y2[k]/scalars.T);
       fprintf(myCHIfile, "%f %Lf %Lf\n", p,  (CHI.y[k])/scalars.T, (CHI.y2[k])/scalars.T);
@@ -138,6 +138,7 @@ int main(int argc, char* argv[]) {
     }
 
     clock_t tEnd = clock();
+    std::cout << "\nElapsed time "<< (double)(tEnd - tStart)/CLOCKS_PER_SEC<<"\n";
 
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -9,9 +9,55 @@ import sys, os, glob,csv
 import random
 import colorsys
 
-WDIR='./'
 DDIR = './cfgs/'
 
+# =============== plot the network ========================================
+
+def plotNetwork(netfile):
+    
+    #try:
+    network = np.loadtxt(netfile)
+    L = network[0][0]
+    Lx=L
+    xtilt=L/2
+    Ly = L*np.sqrt(3)/2.
+    print(L,Ly,xtilt)
+    fig=plt.figure(figsize=(Lx,Ly))
+    axval= fig.add_subplot(1, 1, 1)
+    network = network[1:]
+    
+    
+    for pair in network:
+        xu = pair[0]%L+0.5*(pair[0]//L)
+        yu = (pair[0]//L)*np.sqrt(3)/2
+        xv = pair[1]%L+0.5*(pair[1]//L)
+        yv = (pair[1]//L)*np.sqrt(3)/2
+
+        cir1=ptch.Circle((xu,yu),radius=.1,ec=None,fc='black')
+        axval.add_patch(cir1)
+        axval.text(xu+0.1,yu+0.1,str(pair[0].astype(int)),fontsize=8)
+        cir2=ptch.Circle((xv,yv),radius=.1,ec=None,fc='black')
+        axval.add_patch(cir2)
+        axval.text(xv+0.1,yv+0.1,str(pair[1].astype(int)),fontsize=8)
+        ####################
+        if xu-xv>1 and yu-yv<1:
+           xu=xu-L
+        elif xv-xu>1 and yv-yu<1:
+           xv=xv-Lx
+        
+        if yu-yv>1:
+           yu=yu-Ly
+           xu=xu-xtilt
+        elif yv-yu>1:
+           yv=yv-Ly
+           xv=xv-xtilt
+        
+        edge=lne.Line2D([xu,xv],[yu,yv],color='black')              
+        axval.add_line(edge)
+
+    axval.axis('scaled')
+    #axval.axis('off')
+    return fig
 
 
 # =============== configuration plotting ========================================
@@ -78,8 +124,10 @@ def plotConf(bondfile, cluster_ind=0, show_largest=True):
 ###############################################
 
 if __name__ == "__main__":
+    L = input("enter linear size ")
+    k = input("enter step ")
     
-    bfile = './cfgs/rigid_clusters_L16_p0.6302.txt'
-    fig=plotConf(bfile, cluster_ind=147)
+    fig=plotConf(DDIR+'rigid_clusters_L'+L+'_step_'+k+'.txt', cluster_ind=147)
+    fig = plotNetwork(DDIR+"network_L"+L+'_step_'+k+'.txt')
     plt.show()
     

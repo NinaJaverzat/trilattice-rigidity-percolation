@@ -18,6 +18,7 @@
 
 #include <initializer_list>
 #include "plotting.h"
+#include "rigidity_percolation.h"
 
 using namespace std;
 
@@ -41,11 +42,10 @@ void output_graph (std::vector<std::vector<int>>* pebble_graph, std::vector<int>
 }
 
 
-
-bool save_config (std::vector<std::vector<int>>* network, std::vector<std::vector<int>>* RBlabels, Scalars* scalars, string pathname, double p)
+bool save_config (std::vector<std::vector<int>> bond_labels, Scalars* scalars, int k)
 {
   ostringstream fname;
-  fname << pathname+"rigid_clusters_L" << scalars->L <<"_p" << p <<".txt";
+  fname << "./cfgs/rigid_clusters_L" << scalars->L <<"_step_"<<k<<".txt";
 
   FILE* file = fopen(fname.str().c_str(), "w");
   if (!file)
@@ -55,17 +55,37 @@ bool save_config (std::vector<std::vector<int>>* network, std::vector<std::vecto
   }
   fprintf(file, "%d %d %d %d %d\n",scalars->L,scalars->L,scalars->L,scalars->L,scalars->L);
   //
-  for(int u=0;u<scalars->N;++u)
+  int bond,label,u,v,d;
+  for(vector<vector<int>>::iterator lbond = bond_labels.begin();lbond!=bond_labels.end();++lbond)
   {
-    for(int j = 0;j<(int)(*network)[u].size();++j)
-    {
-      int v = (*network)[u].at(j);
-      if(u>v)fprintf(file, "%f %f %f %f %d\n", u%(scalars->L)+( u/(scalars->L) )/2., ( u/(scalars->L) )*sqrt(3)/2., v%(scalars->L)+( v/(scalars->L) )/2., ( v/(scalars->L) )*sqrt(3)/2., (int)(*RBlabels)[u].at(j) );
-    }
+    bond = (*lbond).at(0);
+    label = (*lbond).at(1);
+    u = bond/3;
+    d = bond%3;
+    v = choosedir(u,d,scalars->L);
+    fprintf(file, "%f %f %f %f %d\n", u%(scalars->L)+( u/(scalars->L) )/2., ( u/(scalars->L) )*sqrt(3)/2., v%(scalars->L)+( v/(scalars->L) )/2., ( v/(scalars->L) )*sqrt(3)/2., label );
   }
+
   fflush(file);
   fclose(file);
   return 0;
+}
+
+void save_network (std::vector<std::vector<int>>* network, Scalars* scalars, int k)
+{
+  ostringstream fname;
+  fname << "./cfgs/network_L" << scalars->L <<"_step_"<<k<<".txt";
+
+  FILE* file = fopen(fname.str().c_str(), "w");
+  fprintf(file, "%d %d\n",scalars->L,scalars->L);
+  for(int u = 0;u<scalars->N;++u)
+  {
+    
+    for(vector<int>::iterator v=(*network)[u].begin();v!=(*network)[u].end();++v)
+    {
+      if(*v<u) {fprintf(file,"%d %d\n", u,*v);}
+    }
+  }
 }
 
 

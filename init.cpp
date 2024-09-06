@@ -27,7 +27,7 @@
 // INITALIZATION
 
 
-void RP_init(std::vector<std::vector<int>>* RNlabels, std::vector<std::vector<int>>* RBlabels, std::unordered_map<int, int>* RCS, std::unordered_map<int, int>* RCS_dist, std::vector<int>* bonds, std::vector<std::vector<int>>* network,
+void init( std::unordered_map<int, int>* RCS, std::unordered_map<int, int>* RCS_dist, std::vector<int>* bonds, std::vector<std::vector<int>>* network,
           std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, Scalars* scalars, OrderParam* ROP, OrderParam* CHI, int p_steps)
 {
 
@@ -46,8 +46,6 @@ void RP_init(std::vector<std::vector<int>>* RNlabels, std::vector<std::vector<in
     for (int i=0; i<scalars->N; ++i)                                            // Each node:
     {
         (*network)[i].clear();                                                 // does not have lattice neighbors
-        (*RBlabels)[i].clear(); 					       // rigid bond labels
-        (*RNlabels)[i].clear();
         (*pebble_graph)[i].clear();                                             // does not have "pebble neighbors"
         (*np)[i] = 2;                                                           // has two pebbles
     }

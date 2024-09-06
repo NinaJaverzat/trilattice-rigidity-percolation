@@ -13,12 +13,12 @@
 
 
 
-void make_rigid_clusters (std::vector<std::vector<int>>* RNlabels, std::vector<std::vector<int>>* RBlabels, std::unordered_map<int, int>* RCS, std::unordered_map<int, int>* RCS_dist,
+void make_rigid_clusters (std::vector<std::vector<int>>* bond_labels, std::vector<int>* bonds, std::unordered_map<int, int>* RCS, std::unordered_map<int, int>* RCS_dist,
                           std::vector<std::vector<int>>* pebble_graph, std::vector<std::vector<int>>* network,std::vector<int>* np, Scalars* scalars);
 
 // PHASE DIAGRAM OF A SINGLE TRIAL
-void RP_single_trial (int MM, std::vector<std::vector<int>>* RNlabels, std::vector<std::vector<int>>* RBlabels, std::unordered_map<int, int>* RCS, std::unordered_map<int, int>* RCS_dist, std::vector<int>* bonds, 
-                std::vector<std::vector<int>>* network, std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, Scalars* scalars, OrderParam* ROP, OrderParam* CHI, int k);
+void single_trial(int MM, std::unordered_map<int, int>* RCS, std::unordered_map<int, int>* RCS_dist, std::vector<int>* bonds, 
+            std::vector<std::vector<int>>* network,std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, Scalars* scalars, OrderParam* ROP, OrderParam* CHI, int k, bool save_conf);
 
 
 

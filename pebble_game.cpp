@@ -1,3 +1,10 @@
+/*
+gather_pebble
+find_path
+reverse_path
+written by DaniMuzi https://github.com/DaniMuzi
+*/
+
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -40,10 +47,11 @@ bool gather_pebble (std::vector<int>* np, std::vector<std::vector<int>>* pebble_
     return found;
 }
 
-bool check_rigidity (int label,std::vector<int>* marks, std::vector<std::vector<int>>* RNlabels, std::vector<int>* np,
-                     std::vector<std::vector<int>>* pebble_graph, int start, bool reverse, std::unordered_set<int> visited, std::queue<int>* q)
+// Try to gather a pebble at the node start
+bool check_rigidity (std::vector<int>* marks, std::vector<int>* np,std::vector<std::vector<int>>* pebble_graph, int start, bool reverse, std::unordered_set<int> visited, std::queue<int>* q)
 {
     bool found = 0;
+
     // Check if there's already a pebble at start
     if ( (*np)[start]>0 )
     {
@@ -53,27 +61,25 @@ bool check_rigidity (int label,std::vector<int>* marks, std::vector<std::vector<
     }
 
     std::vector<int> floppy_path; //path found to pebble
-    found = find_path(np, pebble_graph, &floppy_path, &visited, start);
-    // If a pebble is found, mark all nodes in the path as floppy.
-    if (found)
+    found = find_path (np, pebble_graph, &floppy_path, &visited, start);
+
+    if (found)  // If a pebble is found, mark the nodes encountered during the pebble rearrangement as floppy (ie nodes on the path leading to the pebble)
     {
-    for( std::vector<int>::iterator node_in_path=floppy_path.begin(); node_in_path!=floppy_path.end(); ++node_in_path )
-    {
-      if( (*marks)[*node_in_path]==1 ) std::cout << "**WARNING, marking rigid node "<<*node_in_path<<" as floppy**\n";
-      (*marks)[*node_in_path]=-1;
+       if (reverse) { reverse_path(np, pebble_graph, floppy_path); }
+       for (std::vector<int>::iterator node_in_path = floppy_path.begin(); node_in_path!=floppy_path.end(); ++node_in_path)
+       {
+          if( (*marks)[*node_in_path]==1 ) std::cout << "**WARNING, marking rigid node "<<*node_in_path<<" as floppy**\n";
+         (*marks)[*node_in_path]=-1;
+       }
     }
-    if (found && reverse) { reverse_path(np, pebble_graph, floppy_path); }
-    }
-    else
+    else   // If no pebble is found, mark all visited nodes as rigid and add them to the BFS queue
     {
-      // If no pebble is found, mark all visited nodes as rigid, include them in the rigid cluster, and in the BFS queue
-      for( std::unordered_set<int>::iterator node_in_path=visited.begin(); node_in_path!=visited.end(); ++node_in_path )
-      {
-        if( (*marks)[*node_in_path]==-1 ) std::cout << "**WARNING, marking floppy node "<<*node_in_path<<" as rigid**\n";
-         (*marks)[*node_in_path]=1;
-         (*RNlabels)[*node_in_path].push_back(label); //label the nodes (possibly several labels/node)
-         (*q).push(*node_in_path);
-      }
+       for( std::unordered_set<int>::iterator node_in_path=visited.begin(); node_in_path!=visited.end(); ++node_in_path ) 
+       {
+           if( (*marks)[*node_in_path]==-1 ) std::cout << "**WARNING, marking floppy node "<<*node_in_path<<" as rigid**\n";
+           (*marks)[*node_in_path]=1;
+           (*q).push(*node_in_path);
+       }  
     }
 
     return found;
