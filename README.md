@@ -17,6 +17,6 @@ EXECUTION:
 
 OUTPUTS:
 
-Snapshots of the rigid clusters for each trial are saved in ./cfgs and can be visualised using plotting.py ```python3 plotting.py``` 
+Snapshots of the network anf of its decomposition in rigid clusters are saved for each trial in ./cfgs (the folder must exist) and can be visualised using plotting.py ```python3 plotting.py``` 
 
-The order parameter (strength of percolating rigid cluster) and the susceptibility as function of the filling probability are recorded in ./res
+The order parameter (strength of percolating rigid cluster) and the susceptibility as function of the filling probability are recorded in ./res (the folder must exist)
