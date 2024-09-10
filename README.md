@@ -1,6 +1,6 @@
 # trilattice-rigidity-percolation
 
-The code implements basic central-force rigidity percolation on the triangular lattice, as described in the original works [D. J. Jacobs and M. F. Thorpe Phys. Rev. E 53, 3682 (1996)](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.53.3682) and [D. J. Jacobs, B. Hendrickson Journal of Computational Physics 137, 2 (1997)](https://www.sciencedirect.com/science/article/abs/pii/S0021999197958095).
+The code implements basic central-force bond rigidity percolation on the triangular lattice, as described in the original works [D. J. Jacobs and M. F. Thorpe Phys. Rev. E 53, 3682 (1996)](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.53.3682) and [D. J. Jacobs, B. Hendrickson Journal of Computational Physics 137, 2 (1997)](https://www.sciencedirect.com/science/article/abs/pii/S0021999197958095).
 
 COMPILATION:
 
