@@ -13,7 +13,7 @@
 
 
 
-void make_rigid_clusters (std::vector<std::vector<int>>* bond_labels, std::vector<int>* bonds, std::unordered_map<int, int>* RCS, std::unordered_map<int, int>* RCS_dist,
+void make_rigid_clusters (std::vector<std::vector<int>>* bond_labels, std::vector<int>* trial_bonds, std::unordered_map<int, int>* RCS, std::unordered_map<int, int>* RCS_dist,
                           std::vector<std::vector<int>>* pebble_graph, std::vector<std::vector<int>>* network,std::vector<int>* np, Scalars* scalars);
 
 // PHASE DIAGRAM OF A SINGLE TRIAL
@@ -90,6 +90,9 @@ inline void cover_edge(std::vector<std::vector<int>>* pebble_graph, std::vector 
     (*pebble_graph)[from].push_back(to);
 }
 
+inline int sign(int x){   if (abs(x)<=1) return x;   else return ((x < 0) - (x > 0)); }
+inline int x_dist(int u, int v, Scalars* scalars) { return sign( u%(scalars->L) - v%(scalars->L) );}
+inline int y_dist(int u, int v, Scalars* scalars) { return sign( u/(scalars->L) - v/(scalars->L) );}
 
 
 #endif /* R_PERC_H_ */

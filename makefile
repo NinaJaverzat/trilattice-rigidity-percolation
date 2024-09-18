@@ -2,7 +2,7 @@
 CXX = g++-10
 
 # Compiler flags
-CXXFLAGS = -std=c++20 -Wall -Wextra -pedantic
+CXXFLAGS = -std=c++20 -Wall -Wextra -pedantic -O3
 
 # List of source files
 SRCS = main.cpp basic_functions.cpp rigidity_percolation.cpp pebble_game.cpp init.cpp plotting.cpp

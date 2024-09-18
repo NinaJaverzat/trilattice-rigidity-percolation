@@ -8,7 +8,7 @@
 
 // INITALIZATION
 
-void basic_init(Scalars* scalars, OrderParam* COP, OrderParam* ROP, OrderParam* Tpb);
+void basic_init(Scalars* scalars, OrderParam* COP, OrderParam* ROP, OrderParam* PP);
 
 
 /////////////////////////////////////////////////////////////////////////////////

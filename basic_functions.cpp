@@ -25,7 +25,7 @@
 
 // INITALIZATION
 
-void basic_init(Scalars* scalars, OrderParam* COP, OrderParam* ROP, OrderParam* Tpb)
+void basic_init(Scalars* scalars, OrderParam* COP, OrderParam* ROP, OrderParam* PP)
 {
 
     scalars->N = scalars->L*scalars->L;
@@ -44,8 +44,8 @@ void basic_init(Scalars* scalars, OrderParam* COP, OrderParam* ROP, OrderParam* 
         COP->y2.push_back(0);
         ROP->y.push_back(0);
         ROP->y2.push_back(0);
-        Tpb->y.push_back(0);
-        Tpb->y2.push_back(0);
+        PP->y.push_back(0);
+        PP->y2.push_back(0);
     }
 
 }

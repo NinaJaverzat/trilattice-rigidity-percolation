@@ -72,7 +72,6 @@ def plotConf(bondfile, cluster_ind=0, show_largest=True):
     Lx = bonds[0][0]
     Ly = Lx*np.sqrt(3)/2.
     xtilt = Lx/2.
-    print("Lx, Ly, xtilt",Lx,Ly,xtilt)
     bonds=bonds[1:]
 
     fig=plt.figure(figsize=(Lx,Ly))
@@ -125,9 +124,15 @@ def plotConf(bondfile, cluster_ind=0, show_largest=True):
 
 if __name__ == "__main__":
     L = input("enter linear size ")
-    k = input("enter step ")
-    
-    fig=plotConf(DDIR+'rigid_clusters_L'+L+'_step_'+k+'.txt', cluster_ind=147)
-    fig = plotNetwork(DDIR+"network_L"+L+'_step_'+k+'.txt')
+    k = input("enter filling step ")
+    pn = input("plot network ? (y/n) ")
+    pc = input("plot rigid cluster decomposition ? (y/n) ")
+
+    if pc=='y':
+        cluster_ind = int(input("cluster index to be highlighted ? (type 0 if none) "))
+        fig=plotConf(DDIR+'rigid_clusters_L'+L+'_step_'+k+'.txt', cluster_ind=cluster_ind)
+    if pn=='y':
+        fig = plotNetwork(DDIR+"network_L"+L+'_step_'+k+'.txt')
+    print("\nLx = ",L," Ly = ",int(L)*np.sqrt(3)/2., " xtilt = ",int(L)/2)
     plt.show()
     

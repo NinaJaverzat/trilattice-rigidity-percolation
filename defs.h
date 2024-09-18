@@ -29,7 +29,9 @@ struct Scalars
 
 	int L, N, M, T;                                                               // Lattice size, Number of nodes, Number of Bonds, Number of trials
 
-	long double CSmax, RCSmax;                                                    // Size of the larger cluster, size of the largest rigid cluster
+	long double RCSmax, NRC;                                                      // Size of the largest rigid cluster, number of rigid clusters
+
+        int wrap_state;								      // The wrapping state of the configuration: 0 (does not wrap), +1 (horizontal), -1 (vertical), 2 (both)
 
 	unsigned int seed;
 	std::mt19937 gen;

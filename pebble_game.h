@@ -8,13 +8,13 @@
 
 // PEBBLE GAME FUNCTIONS
 
-bool gather_pebble (std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, int start, bool reverse, std::unordered_set<int> visited);
+bool find_pebble (std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, int start, std::unordered_set<int> skips, bool reverse);
 
-bool check_rigidity (std::vector<int>* marks, std::vector<int>* np,std::vector<std::vector<int>>* pebble_graph, int start, bool reverse, std::unordered_set<int> visited, std::queue<int>* q);
+void reverse_path (std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, std::stack<int> path_found);
 
-bool find_path (std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, std::vector<int>* path_found, std::unordered_set<int>* visited, int start);
+bool find_path (std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, std::stack<int>* full_path, std::unordered_set<int> skips, int start, std::vector<int>* marks);
 
-void reverse_path (std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, std::vector<int> path);
+bool check_rigidity (std::vector<int>* marks,std::vector<int>* np, std::vector<std::vector<int>>* pebble_graph, int start, bool reverse, std::unordered_set<int> visited, std::queue<int>* q);
 
 
 #endif /* PG_H_ */
