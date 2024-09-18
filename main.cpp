@@ -2,12 +2,9 @@
 Bond-diluted rigidity percolation.
 
 Activate bonds in random order;
-Study connectivity percolation using the NZ algorithm;
-If NZ says:
-- Same cluster -> Pivoting <-> New rigid cluster made of the new bond only;
-- Different cluster ->
--- Same rigid cluster -> Overconstaining <-> Redundant bond
--- Different rigid cluster -> Rigidification <-> Independent bond, play the pebble game to build the new rigid cluster
+Identify the rigid clusters
+Compute standard percolation quantities [percolation strength, susceptibility, probability to percolate]
+Output network information that can be used to visualize rigid clusters
 */
 
 #include <cstdio>
