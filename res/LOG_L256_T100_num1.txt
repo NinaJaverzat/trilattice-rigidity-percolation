@@ -1,0 +1,4 @@
+# Seed for random numers generation: 1413661635
+# L = 256, N = 65536, M = 196608, T = 100
+# pmin = 0.635200, pmax = 0.685200, p_steps = 20
+# Time taken: 38428.79s
